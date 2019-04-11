@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import Button from '@material-ui/core/Button';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import CreateProject from './components/CreateProject';
+import axios from 'axios';
+import newProjectApi from './services/projectApi';
 import './App.css';
 
+const projectApi = newProjectApi({ apiProvider: axios })
+
 class App extends Component {
-  constructor(props: object) {
-    super(props);
-    this.state = {};
-  }
-
-  getPosts = () => {
-    console.log('stuff!')
-    this.setState({ data: 'more stuff' })
-  }
-
   render() {
     return (
       <div className="App">
-        <Button onClick={this.getPosts} className='stuff' variant="contained" color="secondary">Click me!</Button>
+        <BrowserRouter>
+          <Switch>
+            <Route 
+              path='/project/new' 
+              render={(props) => <CreateProject {...props} projectApi={projectApi}/>}
+            />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
