@@ -20,14 +20,13 @@ class CreateProject extends Component<Props, State> {
 
   createProject = async (event: any) => {
     event.preventDefault();
-    await this.props.projectApi.createProject({ project: this.state });
+    await this.props.projectApi.createProject(this.state);
   }
 
-  handleChange = (event: any) => {
-    const name = event.target.name
-    const value = event.target.value
-  
-    this.setState({[name]: value})
+  handleChange = (name: string) => {
+    return (event: any) => {
+      this.setState({[name]: event.target.value})
+    }
   }
 
   render() {
@@ -35,13 +34,11 @@ class CreateProject extends Component<Props, State> {
       <div className="project">
           <TextField
             label="Name"
-            className='name'
-            name='message' 
+            className='project-name'
             value={this.state.name}
-            onChange={this.handleChange}
+            onChange={this.handleChange('name')}
             margin="normal"
           />
-        <input type='submit' className="btn btn-outline-primary new-post-submit"/>
         <Button onClick={this.createProject} className='create-project' variant="contained" color="secondary">Click me!</Button>
       </div>
     );
