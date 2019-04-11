@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, ObjectHTMLAttributes } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import projectApi from '../services/projectApi';
+
+interface Props {
+  projectApi: {
+    createProject(params: object): any;
+  };
+}
 
 interface State {
   name?: string;
 };
 
-class CreateProject extends Component<State> {
+class CreateProject extends Component<Props, State> {
   state: State = {
     name: ''
-  };
+  }
 
   createProject = async (event: any) => {
     event.preventDefault();
-    await projectApi.createProject({ project: this.state });
+    await this.props.projectApi.createProject({ project: this.state });
   }
 
   handleChange = (event: any) => {

@@ -1,8 +1,8 @@
 import Api from './api';
 
-class ProjectApi extends Api {
-  constructor() {
-    super({ baseURL: 'http://localhost:3000' })
+export default class ProjectApi extends Api {
+  constructor({ apiProvider }: { apiProvider: any }) {
+    super({ baseURL: 'http://localhost:3000', apiProvider })
   }
 
   createProject = async ({ project }:{ project:object }): Promise<void> => {
@@ -13,6 +13,4 @@ class ProjectApi extends Api {
     }
   }
 }
-
-export default new ProjectApi();
 

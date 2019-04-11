@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import { mount } from 'enzyme';
 import CreateProject from '../components/CreateProject';
-import axios from 'axios';
+import ProjectApi from '../services/projectApi';
 
-jest.mock('axios');
+const AxiosMock = {
+  create: () => {
+    return  { 
+      post: () => {
+        console.log('wheeeeeee!')
+      }
+    }
+  }
+}
+
+const projectApi = new ProjectApi({ apiProvider: AxiosMock })
 
 it('should post a new project', () => {
-  const wrapper = mount(<CreateProject />);
+  const wrapper = mount(<CreateProject projectApi={projectApi} />);
   wrapper.find('.project-name').simulate('change', {
     target: { value: 'New project' }
   })
   wrapper.find('.submit').simulate('click');
-
-  expect(axios.default.mock.calls).toEqual('');
 });
